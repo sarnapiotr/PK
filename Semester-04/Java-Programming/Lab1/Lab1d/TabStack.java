@@ -5,11 +5,17 @@ public class TabStack {
     private int size = 0;
 
     public String pop(){
+        if(size <= 0){
+            throw new RuntimeException("Stos jest pusty!");
+        }
         size--;
         return stack[size];
     }
 
     public void push(String a){
+        if(size >= 20){
+            throw new RuntimeException("Stos jest pełny!");
+        }
         stack[size] = a;
         size++;
     }
