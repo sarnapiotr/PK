@@ -4,8 +4,6 @@
 *.iml
 *.iws
 out/
-**/.gitignore
-!.gitignore
 
 target/
 build/
