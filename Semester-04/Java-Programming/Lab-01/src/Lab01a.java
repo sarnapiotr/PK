@@ -4,7 +4,7 @@ class NumberTooLargeException extends RuntimeException {
     }
 }
 
-public class Lab1a {
+public class Lab01a {
     public static void main(String[] args) {
         try{
             System.out.println("Sprawdzam liczbę 50");

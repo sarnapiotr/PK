@@ -1,6 +1,6 @@
 import java.util.Scanner;
 
-public class Lab1b {
+public class Lab01b {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         int attempts = 0;
