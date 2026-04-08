@@ -1,0 +1,15 @@
+*.class
+
+.idea/
+*.iml
+*.iws
+out/
+**/.gitignore
+!.gitignore
+
+target/
+build/
+.gradle/
+
+Thumbs.db
+.DS_Store
