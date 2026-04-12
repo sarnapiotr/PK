@@ -6,27 +6,27 @@ public class Lab01c {
         int attempts = 0;
         boolean success = false;
 
-        System.out.println("Kalkulator pierwiastków (masz 3 próby)");
+        System.out.println("Square Root Calculator (you have 3 attempts)");
 
         while (attempts < 3 && !success){
-            System.out.println("Próba " + (attempts + 1) + "/3.");
+            System.out.println("Attempt " + (attempts + 1) + "/3.");
 
-            try{
-                System.out.println("Podaj liczbę a (podpierwiastkowa): ");
+            try {
+                System.out.println("Enter number a (the radicand): ");
                 double a = sc.nextDouble();
-                System.out.println("Podaj liczbę b (stopień pierwiastka): ");
+                System.out.println("Enter number b (the degree of the root): ");
                 double b = sc.nextDouble();
 
                 root(a, b);
                 success = true;
-            } catch(IllegalArgumentException e) {
-                System.err.println("Złapano błąd: " + e.getMessage());
+            } catch (IllegalArgumentException e) {
+                System.err.println("Error caught: " + e.getMessage());
                 attempts++;
             }
         }
 
         if (!success) {
-            System.err.println("Przekroczono limit błędów. Program kończy działanie.");
+            System.err.println("Error limit exceeded. The program is terminating");
         }
 
         sc.close();
@@ -34,12 +34,12 @@ public class Lab01c {
 
     public static void root(double a, double b){
         if (b == 0) {
-            throw new IllegalArgumentException("Stopień pierwiastka (b) nie może wynosić zero!");
+            throw new IllegalArgumentException("The degree of the root (b) cannot be zero!");
         }
         if (a < 0) {
-            throw new IllegalArgumentException("Liczba podpierwiastkowa (a) nie może być ujemna!");
+            throw new IllegalArgumentException("The radicand (a) cannot be negative!");
         }
 
-        System.out.println("Pierwiastek z liczby " + a + " stopnia " + b + " wynosi: " + Math.pow(a, 1.0 / b));
+        System.out.println("The " + b + "th root of " + a + " is: " + Math.pow(a, 1.0 / b));
     }
 }

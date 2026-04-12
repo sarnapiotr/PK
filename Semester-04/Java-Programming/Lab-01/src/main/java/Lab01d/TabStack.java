@@ -6,7 +6,7 @@ public class TabStack {
 
     public String pop(){
         if(size <= 0){
-            throw new RuntimeException("Stos jest pusty!");
+            throw new RuntimeException("Stack is empty!");
         }
         size--;
         return stack[size];
@@ -14,7 +14,7 @@ public class TabStack {
 
     public void push(String a){
         if(size >= 20){
-            throw new RuntimeException("Stos jest pełny!");
+            throw new RuntimeException("Stack is full!");
         }
         stack[size] = a;
         size++;

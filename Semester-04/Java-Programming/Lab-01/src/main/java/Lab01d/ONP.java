@@ -5,68 +5,68 @@ import java.util.Scanner;
 public class ONP {
     private TabStack stack = new TabStack();
 
-    static void czyPusteRownanie(String tmp){
-        if(tmp.isEmpty()){
-            throw new RuntimeException("Równanie jest puste!");
+    static void checkEmptyEquation(String equation){
+        if(equation.isEmpty()){
+            throw new RuntimeException("Equation is empty!");
         }
     }
 
-    static void czyPoprawneRownanie(String rownanie){
-        if (!rownanie.endsWith("=")){
-            throw new RuntimeException("Brak '='!");
+    static void checkValidEquation(String equation){
+        if (!equation.endsWith("=")){
+            throw new RuntimeException("Missing '=' at the end!");
         }
     }
 
-    static void czyPoprawneNawiasy(String rownanie) {
-        int licznik = 0;
-        for (int i = 0; i < rownanie.length(); i++){
-            if(rownanie.charAt(i) == '(') licznik++;
-            else if (rownanie.charAt(i) == ')') licznik--;
+    static void checkValidParentheses(String equation) {
+        int counter = 0;
+        for (int i = 0; i < equation.length(); i++){
+            if(equation.charAt(i) == '(') counter++;
+            else if (equation.charAt(i) == ')') counter--;
 
-            if(licznik < 0){
-                throw new RuntimeException("Za dużo nawiasów zamykających!");
+            if(counter < 0){
+                throw new RuntimeException("Too many closing parentheses!");
             }
         }
 
-        if(licznik != 0){
-            throw new RuntimeException("Za dużo nawiasów otwierających!");
+        if(counter != 0){
+            throw new RuntimeException("Too many opening parentheses!");
         }
     }
 
-    private double silnia(double n){
-        if(n < 0) throw new RuntimeException("Silnia z liczby ujemnej!");
-        double wynik = 1;
-        for(int i = 1; i <= n; i++) wynik *= i;
-        return wynik;
+    private double factorial(double n){
+        if(n < 0) throw new RuntimeException("Factorial of a negative number!");
+        double result = 1;
+        for(int i = 1; i <= n; i++) result *= i;
+        return result;
     }
 
-    public String obliczOnp(String rownanie) {
+    public String calculateOnp(String equation) {
         stack.setSize(0);
-        String wynik = "";
+        String result = "";
 
-        for (int i = 0; i < rownanie.length(); i++) {
-            if (rownanie.charAt(i) >= '0' && rownanie.charAt(i) <= '9') {
-                wynik += rownanie.charAt(i);
-                if (!(rownanie.charAt(i + 1) >= '0' && rownanie.charAt(i + 1) <= '9')) {
-                    stack.push(wynik);
-                    wynik = "";
+        for (int i = 0; i < equation.length(); i++) {
+            if (equation.charAt(i) >= '0' && equation.charAt(i) <= '9') {
+                result += equation.charAt(i);
+                if (!(equation.charAt(i + 1) >= '0' && equation.charAt(i + 1) <= '9')) {
+                    stack.push(result);
+                    result = "";
                 }
-            } else if (rownanie.charAt(i) == '=') {
+            } else if (equation.charAt(i) == '=') {
                 return stack.pop();
-            } else if (rownanie.charAt(i) != ' ') {
-                if(rownanie.charAt(i) == '!' || rownanie.charAt(i) == 'p'){
+            } else if (equation.charAt(i) != ' ') {
+                if(equation.charAt(i) == '!' || equation.charAt(i) == 'p'){
                     double a = Double.parseDouble(stack.pop());
 
-                    if (rownanie.charAt(i) == '!'){
-                        stack.push(silnia(a) + "");
-                    } else if (rownanie.charAt(i) == 'p'){
-                        if (a < 0) throw new RuntimeException("Pierwiastek z liczby ujemnej!");
+                    if (equation.charAt(i) == '!'){
+                        stack.push(factorial(a) + "");
+                    } else if (equation.charAt(i) == 'p'){
+                        if (a < 0) throw new RuntimeException("Square root of a negative number!");
                         stack.push(Math.sqrt(a) + "");
                     }
                 } else{
                     double b = Double.parseDouble(stack.pop());
                     double a = Double.parseDouble(stack.pop());
-                    switch (rownanie.charAt(i)) {
+                    switch (equation.charAt(i)) {
                         case ('+'): {
                             stack.push((a + b) + "");
                             break;
@@ -82,7 +82,7 @@ public class ONP {
                             break;
                         }
                         case ('/'): {
-                            if(b == 0) throw new RuntimeException("Dzielenie przez zero!");
+                            if(b == 0) throw new RuntimeException("Division by zero!");
                             stack.push((a / b) + "");
                             break;
                         }
@@ -102,55 +102,52 @@ public class ONP {
         return "0.0";
     }
 
-    public String przeksztalcNaOnp(String rownanie) {
-        String wynik = "";
-        for (int i = 0; i < rownanie.length(); i++) {
-            if (rownanie.charAt(i) >= '0' && rownanie.charAt(i) <= '9') {
-                wynik += rownanie.charAt(i);
-                if (!(rownanie.charAt(i + 1) >= '0' && rownanie.charAt(i + 1) <= '9'))
-                    wynik += " ";
+    public String convertToOnp(String equation) {
+        String result = "";
+        for (int i = 0; i < equation.length(); i++) {
+            if (equation.charAt(i) >= '0' && equation.charAt(i) <= '9') {
+                result += equation.charAt(i);
+                if (!(equation.charAt(i + 1) >= '0' && equation.charAt(i + 1) <= '9'))
+                    result += " ";
             } else
-                switch (rownanie.charAt(i)) {
+                switch (equation.charAt(i)) {
                     case ('+'):
-                        ;
                     case ('-'): {
                         while (stack.getSize() > 0 && !stack.showValue(stack.getSize() - 1).equals("(")) {
-                            wynik = wynik + stack.pop() + " ";
+                            result = result + stack.pop() + " ";
                         }
-                        String str = "" + rownanie.charAt(i);
+                        String str = "" + equation.charAt(i);
                         stack.push(str);
                         break;
                     }
                     case ('x'):
-                        ;
                     case ('*'):
-                        ;
                     case ('/'): {
                         while (stack.getSize() > 0 && !stack.showValue(stack.getSize() - 1).equals("(")
                                 && !stack.showValue(stack.getSize() - 1).equals("+")
                                 && !stack.showValue(stack.getSize() - 1).equals("-")) {
-                            wynik = wynik + stack.pop() + " ";
+                            result = result + stack.pop() + " ";
                         }
-                        String str = "" + rownanie.charAt(i);
+                        String str = "" + equation.charAt(i);
                         stack.push(str);
                         break;
                     }
                     case ('^'): {
                         while (stack.getSize() > 0 && stack.showValue(stack.getSize() - 1).equals("^")) {
-                            wynik = wynik + stack.pop() + " ";
+                            result = result + stack.pop() + " ";
                         }
-                        String str = "" + rownanie.charAt(i);
+                        String str = "" + equation.charAt(i);
                         stack.push(str);
                         break;
                     }
                     case ('('): {
-                        String str = "" + rownanie.charAt(i);
+                        String str = "" + equation.charAt(i);
                         stack.push(str);
                         break;
                     }
                     case (')'): {
                         while (stack.getSize() > 0 && !stack.showValue(stack.getSize() - 1).equals("(")) {
-                            wynik = wynik + stack.pop() + " ";
+                            result = result + stack.pop() + " ";
                         }
                         stack.pop();
                         break;
@@ -159,51 +156,51 @@ public class ONP {
                         while (stack.getSize() > 0 && !stack.showValue(stack.getSize() - 1).equals("(")
                                 && !stack.showValue(stack.getSize() - 1).equals("+")
                                 && !stack.showValue(stack.getSize() - 1).equals("-")) {
-                            wynik = wynik + stack.pop() + " ";
+                            result = result + stack.pop() + " ";
                         }
-                        stack.push("" + rownanie.charAt(i));
+                        stack.push("" + equation.charAt(i));
                         break;
                     }
                     case ('!'): {
-                        wynik += "! ";
+                        result += "! ";
                         break;
                     }
                     case ('p'): {
-                        stack.push("" + rownanie.charAt(i));
+                        stack.push("" + equation.charAt(i));
                         break;
                     }
                     case ('='): {
                         while (stack.getSize() > 0) {
-                            wynik = wynik + stack.pop() + " ";
+                            result = result + stack.pop() + " ";
                         }
-                        wynik += "=";
+                        result += "=";
                     }
                 }
         }
 
-        return wynik;
+        return result;
     }
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
-        System.out.println("Podaj równanie zakończone znakiem '=': ");
-        String tmp = sc.nextLine();
+        System.out.println("Enter an equation ending with '=': ");
+        String input = sc.nextLine();
 
         try{
-            czyPusteRownanie(tmp);
-            czyPoprawneRownanie(tmp);
-            czyPoprawneNawiasy(tmp);
+            checkEmptyEquation(input);
+            checkValidEquation(input);
+            checkValidParentheses(input);
 
             ONP onp = new ONP();
-            System.out.print(tmp + " ");
-            String rownanieOnp = onp.przeksztalcNaOnp(tmp);
-            System.out.print(rownanieOnp);
-            String wynik = onp.obliczOnp(rownanieOnp);
-            System.out.println(" " + wynik);
+            System.out.print(input + " ");
+            String onpEquation = onp.convertToOnp(input);
+            System.out.print(onpEquation);
+            String result = onp.calculateOnp(onpEquation);
+            System.out.println(" " + result);
 
         } catch (RuntimeException e){
-            System.err.println("Złapano bład: " + e.getMessage());
+            System.err.println("Error caught: " + e.getMessage());
         }
     }
 }

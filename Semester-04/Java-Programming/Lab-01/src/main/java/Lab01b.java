@@ -6,33 +6,33 @@ public class Lab01b {
         int attempts = 0;
         boolean success = false;
 
-        System.out.println("Kalkulator pierwiastków (masz 3 próby)");
+        System.out.println("Square Root Calculator (you have 3 attempts)");
 
-        while(attempts < 3 && !success) {
-            System.out.println("Próba " + (attempts + 1) + "/3. Podaj liczbę, aby obliczyć jej pierwiastek: ");
+        while (attempts < 3 && !success) {
+            System.out.println("Attempt " + (attempts + 1) + "/3. Enter a number to calculate its square root: ");
 
-            try{
+            try {
                 double inputNumber = sc.nextDouble();
 
                 sqrt(inputNumber);
                 success = true;
             } catch (IllegalArgumentException e){
-                System.err.println("Złapano błąd: " + e.getMessage());
+                System.err.println("Error caught: " + e.getMessage());
                 attempts++;
             }
         }
 
         if (!success) {
-            System.err.println("Przekroczono limit błędów. Program kończy działanie.");
+            System.err.println("Error limit exceeded. The program is terminating");
         }
 
         sc.close();
     }
 
-    public static void sqrt(double number){
-        if(number < 0){
-            throw new IllegalArgumentException("Liczba nie może być liczbą ujemną! Podano: " + number);
+    public static void sqrt(double number) {
+        if (number < 0) {
+            throw new IllegalArgumentException("Number cannot be negative! Provided: " + number);
         }
-        System.out.println("Pierwiastek wynosi: " + Math.sqrt(number));
+        System.out.println("The square root is: " + Math.sqrt(number));
     }
 }
