@@ -24,7 +24,6 @@ class ClientThread implements Runnable {
     private int id;
     private TicketPool ticketPool;
     private Thread thread;
-    private boolean isCanceled = false;
     private Random random = new Random();
 
     public ClientThread(int id, TicketPool ticketPool) {
@@ -38,13 +37,14 @@ class ClientThread implements Runnable {
     }
 
     public void cancelClient() {
-        isCanceled = true;
-        thread.interrupt();
+        if (thread != null) {
+            thread.interrupt();
+        }
     }
 
     @Override
     public void run() {
-        while (!isCanceled) {
+        while (!Thread.currentThread().isInterrupted()) {
             int ticketId = random.nextInt(3);
 
             if (ticketPool.reserve(ticketId, id)) {
@@ -57,7 +57,6 @@ class ClientThread implements Runnable {
                 }
 
                 ticketPool.release(ticketId, id);
-
                 try { Thread.sleep(200); } catch (InterruptedException e) { break; }
 
             } else {
@@ -82,7 +81,6 @@ public class Lab04b {
         for (ClientThread client : clientThreads) {
             client.startClient();
         }
-
         Thread.sleep(1500);
 
         System.out.println("Canceling task 3");
