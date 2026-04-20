@@ -56,4 +56,4 @@ SELECT nrKonta, saldo, dataOtwarcia FROM konto WHERE DATEDIFF(CURDATE(), dataOtw
 
 SELECT * FROM operacja ORDER BY YEAR(dataWykonania) DESC, kwota DESC;
 
-ELECT *, IF(saldo > 9999, '***********', saldo) FROM konto;
+SELECT *, IF(saldo > 9999, '***********', saldo) FROM konto;
