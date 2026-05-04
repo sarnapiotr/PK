@@ -187,7 +187,7 @@ public class RPN {
         System.out.println("Enter an equation ending with '=': ");
         String input = sc.nextLine();
 
-        try{
+        try {
             checkEmptyEquation(input);
             checkValidEquation(input);
             checkValidParentheses(input);
@@ -199,7 +199,7 @@ public class RPN {
             String result = rnp.calculateRpn(rpnEquation);
             System.out.println(" " + result);
 
-        } catch (RuntimeException e){
+        } catch (RuntimeException e) {
             System.err.println("Error caught: " + e.getMessage());
         }
     }
