@@ -2,7 +2,7 @@ package Lab01d;
 
 import java.util.Scanner;
 
-public class ONP {
+public class RPN {
     private TabStack stack = new TabStack();
 
     static void checkEmptyEquation(String equation){
@@ -40,7 +40,7 @@ public class ONP {
         return result;
     }
 
-    public String calculateOnp(String equation) {
+    public String calculateRpn(String equation) {
         stack.setSize(0);
         String result = "";
 
@@ -102,7 +102,7 @@ public class ONP {
         return "0.0";
     }
 
-    public String convertToOnp(String equation) {
+    public String convertToRpn(String equation) {
         String result = "";
         for (int i = 0; i < equation.length(); i++) {
             if (equation.charAt(i) >= '0' && equation.charAt(i) <= '9') {
@@ -192,11 +192,11 @@ public class ONP {
             checkValidEquation(input);
             checkValidParentheses(input);
 
-            ONP onp = new ONP();
+            RPN rpn = new RPN();
             System.out.print(input + " ");
-            String onpEquation = onp.convertToOnp(input);
-            System.out.print(onpEquation);
-            String result = onp.calculateOnp(onpEquation);
+            String rpnEquation = rpn.convertToRpn(input);
+            System.out.print(rpnEquation);
+            String result = rpn.calculateRpn(rpnEquation);
             System.out.println(" " + result);
 
         } catch (RuntimeException e){
