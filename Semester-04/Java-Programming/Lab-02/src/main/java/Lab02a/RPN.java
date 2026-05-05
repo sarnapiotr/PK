@@ -226,6 +226,14 @@ public class RPN {
                         history.loadBinary(".\\operationHistory.dat");
                         break;
 
+                    case (5):
+                        history.saveXML(".\\operationHistory.xml");
+                        break;
+
+                    case (6):
+                        history.loadXML(".\\operationHistory.xml");
+                        break;
+
                     case (7):
                         break;
 

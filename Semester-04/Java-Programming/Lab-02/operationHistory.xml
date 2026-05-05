@@ -1,0 +1,7 @@
+<list>
+  <Lab02a.OperationRecord>
+    <originalEquation>2 + 2 * 2 =</originalEquation>
+    <rpnEquation>2 2 2 * + =</rpnEquation>
+    <result>6.0</result>
+  </Lab02a.OperationRecord>
+</list>

@@ -1,5 +1,9 @@
 package Lab02a;
 
+import com.thoughtworks.xstream.XStream;
+import com.thoughtworks.xstream.io.xml.DomDriver;
+import com.thoughtworks.xstream.security.AnyTypePermission;
+
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,11 +25,32 @@ public class HistoryManager {
         ObjectInputStream in = new ObjectInputStream(new FileInputStream(filename));
         history = (List<OperationRecord>) in.readObject();
 
-        for (OperationRecord operation : history) {
-            System.out.println(operation);
-        }
+        in.close();
+    }
+
+    public void saveXML(String filename) throws IOException {
+        FileWriter file = new FileWriter(filename);
+        BufferedWriter out = new BufferedWriter(file);
+        XStream mapping = new XStream(new DomDriver());
+        String xml = mapping.toXML(history);
+        out.write(xml);
+        out.close();
+    }
+
+    public void loadXML(String filename) throws IOException {
+        String xml = "", strLine = "";
+
+        FileReader file = new FileReader(filename);
+        BufferedReader in = new BufferedReader(file);
+
+        while ((strLine = in.readLine()) != null)
+            xml += strLine;
 
         in.close();
+        XStream mapping = new XStream(new DomDriver());
+        mapping.addPermission(AnyTypePermission.ANY);
+
+        history = (List<OperationRecord>) mapping.fromXML(xml);
     }
 
     @Override
