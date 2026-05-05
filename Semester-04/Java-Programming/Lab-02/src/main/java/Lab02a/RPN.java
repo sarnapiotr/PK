@@ -1,5 +1,6 @@
 package Lab02a;
 
+import java.io.IOException;
 import java.util.Scanner;
 
 public class RPN {
@@ -183,23 +184,56 @@ public class RPN {
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-
-        System.out.println("Enter an equation ending with '=': ");
-        String input = sc.nextLine();
+        HistoryManager history = new HistoryManager();
+        int choice = -1;
 
         try {
-            checkEmptyEquation(input);
-            checkValidEquation(input);
-            checkValidParentheses(input);
+            while (choice != 5) {
+                System.out.println("Choose operation: \n1. Calculate new equation\n2. Show equation history (from RAM)" +
+                        "\n3. Save equation history to bin file\n4. Load equation history from bin file");
+                choice = sc.nextInt();
 
-            RPN rnp = new RPN();
-            System.out.print(input + " ");
-            String rpnEquation = rnp.convertToRpn(input);
-            System.out.print(rpnEquation);
-            String result = rnp.calculateRpn(rpnEquation);
-            System.out.println(" " + result);
+                switch (choice) {
+                    case (1):
+                        System.out.println("Enter an equation ending with '=': ");
+                        String input = sc.nextLine();
 
+                        checkEmptyEquation(input);
+                        checkValidEquation(input);
+                        checkValidParentheses(input);
+
+                        RPN rnp = new RPN();
+                        System.out.print(input + " ");
+                        String rpnEquation = rnp.convertToRpn(input);
+                        System.out.print(rpnEquation);
+                        String result = rnp.calculateRpn(rpnEquation);
+                        System.out.println(" " + result);
+
+                        OperationRecord operation = new OperationRecord(input, rpnEquation, result);
+                        history.addOperation(operation);
+                        break;
+
+                    case (2):
+                        System.out.println(history);
+                        break;
+
+                    case (3):
+                        history.saveBinary(".\\binOperationHistory.dat");
+                        break;
+
+                    case (4):
+                        history.loadBinary(".\\binOperationHistory.dat");
+                        break;
+
+                    default:
+                        throw new RuntimeException("Invalid choice number: " + choice);
+                }
+            }
         } catch (RuntimeException e) {
+            System.err.println("Error caught: " + e.getMessage());
+        } catch (IOException e) {
+            System.err.println("Error caught: " + e.getMessage());
+        } catch (ClassNotFoundException e) {
             System.err.println("Error caught: " + e.getMessage());
         }
     }
