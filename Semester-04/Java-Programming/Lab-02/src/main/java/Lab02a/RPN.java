@@ -185,13 +185,14 @@ public class RPN {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         HistoryManager history = new HistoryManager();
-        int choice = -1;
+        int choice = 0;
 
-        try {
-            while (choice != 5) {
-                System.out.println("Choose operation: \n1. Calculate new equation\n2. Show equation history (from RAM)" +
-                        "\n3. Save equation history to bin file\n4. Load equation history from bin file");
-                choice = sc.nextInt();
+        while (choice != 7) {
+            try {
+                System.out.println("Choose operation: \n1. Calculate new equation\n2. Show equation history (from RAM)\n" +
+                        "3. Save equation history to binary file\n4. Load equation history from binary file\n" +
+                        "5. Save equation history to XML file\n6. Load equation history from XML file\n7. Exit");
+                choice = Integer.parseInt(sc.nextLine());
 
                 switch (choice) {
                     case (1):
@@ -218,23 +219,26 @@ public class RPN {
                         break;
 
                     case (3):
-                        history.saveBinary(".\\binOperationHistory.dat");
+                        history.saveBinary(".\\operationHistory.dat");
                         break;
 
                     case (4):
-                        history.loadBinary(".\\binOperationHistory.dat");
+                        history.loadBinary(".\\operationHistory.dat");
+                        break;
+
+                    case (7):
                         break;
 
                     default:
-                        throw new RuntimeException("Invalid choice number: " + choice);
+                        System.out.println("Invalid choice number: " + choice);
                 }
+            } catch (RuntimeException e) {
+                System.err.println("Error caught: " + e.getMessage());
+            } catch (IOException e) {
+                System.err.println("Error caught: " + e.getMessage());
+            } catch (ClassNotFoundException e) {
+                System.err.println("Error caught: " + e.getMessage());
             }
-        } catch (RuntimeException e) {
-            System.err.println("Error caught: " + e.getMessage());
-        } catch (IOException e) {
-            System.err.println("Error caught: " + e.getMessage());
-        } catch (ClassNotFoundException e) {
-            System.err.println("Error caught: " + e.getMessage());
         }
     }
 }
