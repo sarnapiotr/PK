@@ -1,0 +1,21 @@
+Client 1 | Question: Ktory z ponizszych typow danych NIE jest typem prostym w Javie? | Answer: TIMEOUT
+Client 1 | Question: Jakie slowo kluczowe w Javie sluzy do dziedziczenia klas? | Answer: B
+Client 1 | Question: Ktory z ponizszych typow danych NIE jest typem prostym w Javie? | Answer: TIMEOUT
+Client 2 | Question: Ktory z ponizszych typow danych NIE jest typem prostym w Javie? | Answer: TIMEOUT
+Client 1 | Question: Jakie slowo kluczowe w Javie sluzy do dziedziczenia klas? | Answer: TIMEOUT
+Client 2 | Question: Jakie slowo kluczowe w Javie sluzy do dziedziczenia klas? | Answer: TIMEOUT
+Client 1 | Question: Ktory z ponizszych typow danych NIE jest typem prostym w Javie? | Answer: B
+Client 1 | Question: Jakie slowo kluczowe w Javie sluzy do dziedziczenia klas? | Answer: A
+Client 1 | Question: Co oznacza skrot JVM? | Answer: A
+Client 1 | Question: Kto jest tworcem jezyka Java? | Answer: C
+Client 1 | Question: Ktora metoda jest punktem wejscia (startowym) w programie Java? | Answer: D
+Client 2 | Question: Ktory z ponizszych typow danych NIE jest typem prostym w Javie? | Answer: TIMEOUT
+Client 2 | Question: Jakie slowo kluczowe w Javie sluzy do dziedziczenia klas? | Answer: TIMEOUT
+Client 2 | Question: Co oznacza skrot JVM? | Answer: B
+Client 2 | Question: Kto jest tworcem jezyka Java? | Answer: TIMEOUT
+Client 2 | Question: Ktora metoda jest punktem wejscia (startowym) w programie Java? | Answer: TIMEOUT
+Client 3 | Question: Ktory z ponizszych typow danych NIE jest typem prostym w Javie? | Answer: B
+Client 3 | Question: Jakie slowo kluczowe w Javie sluzy do dziedziczenia klas? | Answer: A
+Client 3 | Question: Co oznacza skrot JVM? | Answer: A
+Client 3 | Question: Kto jest tworcem jezyka Java? | Answer: C
+Client 3 | Question: Ktora metoda jest punktem wejscia (startowym) w programie Java? | Answer: D
