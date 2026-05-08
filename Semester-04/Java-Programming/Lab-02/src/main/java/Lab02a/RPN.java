@@ -240,11 +240,7 @@ public class RPN {
                     default:
                         System.out.println("Invalid choice number: " + choice);
                 }
-            } catch (RuntimeException e) {
-                System.err.println("Error caught: " + e.getMessage());
-            } catch (IOException e) {
-                System.err.println("Error caught: " + e.getMessage());
-            } catch (ClassNotFoundException e) {
+            } catch (RuntimeException | ClassNotFoundException | IOException e) {
                 System.err.println("Error caught: " + e.getMessage());
             }
         }
