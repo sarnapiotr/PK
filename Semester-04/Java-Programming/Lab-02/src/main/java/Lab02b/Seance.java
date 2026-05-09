@@ -29,6 +29,10 @@ public class Seance implements Serializable {
         }
     }
 
+    public void reserveSeat(char row, int number) {
+        seats.get(row).put(number, true);
+    }
+
     @Override
     public String toString() {
         String str = "";

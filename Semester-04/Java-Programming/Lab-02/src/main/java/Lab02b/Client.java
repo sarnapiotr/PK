@@ -23,7 +23,7 @@ public class Client implements Serializable {
 
         str += name + " | " + surname + " | " + email + " | " + phoneNumber + "\n" + seance.toString() + "\n";
         for (Seat seat : seatList) {
-            str += seat.toString() + " | ";
+            str += seat.toString() + " ";
         }
 
         return str;

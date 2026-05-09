@@ -1,7 +1,10 @@
 package Lab02b;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class Cinema {
@@ -18,33 +21,82 @@ public class Cinema {
 
                 switch (choice) {
                     case (1):
-                        Seance houseMd = new Seance("House MD", LocalDate.parse("2026-05-09"), LocalTime.parse("13:24"), 12);
-                        cinemaManager.addSeance(houseMd);
-                        Seance GOT = new Seance("Game of Thrones", LocalDate.parse("2026-05-09"), LocalTime.parse("13:52"), 16);
-                        cinemaManager.addSeance(GOT);
-                        Seance BB = new Seance("Breaking Bad", LocalDate.parse("2026-05-09"), LocalTime.parse("13:52"), 16);
-                        cinemaManager.addSeance(BB);
+                        String seanceName, seanceDate, seanceTime, seanceAgeRestriction;
+                        System.out.println("Enter Seance name: ");
+                        seanceName = sc.nextLine();
+                        System.out.println("Enter Seance date: ");
+                        seanceDate = sc.nextLine();
+                        System.out.println("Enter Seance time: ");
+                        seanceTime = sc.nextLine();
+                        System.out.println("Enter Seance age restriction: ");
+                        seanceAgeRestriction = sc.nextLine();
+
+                        cinemaManager.addSeance(new Seance(seanceName, LocalDate.parse(seanceDate), LocalTime.parse(seanceTime), Integer.parseInt(seanceAgeRestriction)));
                         break;
 
                     case (2):
-                        int seanceChoice = 0;
-                        cinemaManager.printSeanceList();
-                        seanceChoice = Integer.parseInt(sc.nextLine());
-                        Seance clientSeance = cinemaManager.getSeance(seanceChoice);
+                        String clientName, clientSurname, clientEmail, clientPhoneNumber;
+                        System.out.println("Enter Client name: ");
+                        clientName = sc.nextLine();
+                        System.out.println("Enter Client surname: ");
+                        clientSurname = sc.nextLine();
+                        System.out.println("Enter Client email: ");
+                        clientEmail = sc.nextLine();
+                        System.out.println("Enter Client phone number: ");
+                        clientPhoneNumber = sc.nextLine();
 
-                        System.out.println(clientSeance);
+                        Seance clientSeance = cinemaManager.chooseSeance(sc);
 
+                        List<Seat> seatList = new ArrayList<>();
+                        int seatChoice = 0;
+                        while (seatChoice != 2) {
+                            System.out.println("Choose operation:\n1. Choose seat\n2. Exit");
+                            seatChoice = Integer.parseInt(sc.nextLine());
+
+                            switch (seatChoice) {
+                                case (1):
+                                    char row;
+                                    int number;
+
+                                    System.out.println("Enter row from A-H: ");
+                                    row = sc.nextLine().toUpperCase().charAt(0);
+                                    System.out.printf("Enter seat number in row " + row + ": ");
+                                    number = Integer.parseInt(sc.nextLine());
+
+                                    seatList.add(new Seat(row, number));
+                                    clientSeance.reserveSeat(row, number);
+                                    break;
+
+                                case (2):
+                                    break;
+
+                                default:
+                                    System.out.println("Invalid choice number: " + seatChoice);
+                            }
+                        }
+
+                        cinemaManager.addClient(new Client(clientName, clientSurname, clientEmail, clientPhoneNumber, clientSeance, seatList));
                         break;
 
                     case (3):
                         System.out.println(cinemaManager);
+                        break;
+
+                    case (4):
+                        cinemaManager.saveBinary(".\\seanceClientdata.dat");
+                        break;
+
+                    case (5):
+                        cinemaManager.loadBinary(".\\seanceClientdata.dat");
+                        break;
+
                     case (6):
                         break;
 
                     default:
                         System.out.println("Invalid choice number: " + choice);
                 }
-            } catch (IllegalArgumentException e) {
+            } catch (RuntimeException | IOException | ClassNotFoundException e) {
                 System.err.println(e.getMessage());
             }
         }
