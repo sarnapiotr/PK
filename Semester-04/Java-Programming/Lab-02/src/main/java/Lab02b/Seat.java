@@ -10,4 +10,9 @@ public class Seat implements Serializable {
         this.row = row;
         this.number = number;
     }
+
+    @Override
+    public String toString() {
+        return row + " " + number;
+    }
 }

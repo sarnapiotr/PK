@@ -189,7 +189,7 @@ public class RPN {
 
         while (choice != 7) {
             try {
-                System.out.println("Choose operation: \n1. Calculate new equation\n2. Show equation history (from RAM)\n" +
+                System.out.println("Choose operation:\n1. Calculate new equation\n2. Show equation history (from RAM)\n" +
                         "3. Save equation history to binary file\n4. Load equation history from binary file\n" +
                         "5. Save equation history to XML file\n6. Load equation history from XML file\n7. Exit");
                 choice = Integer.parseInt(sc.nextLine());
