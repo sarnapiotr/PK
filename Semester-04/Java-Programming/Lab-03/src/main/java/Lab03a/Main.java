@@ -1,5 +1,7 @@
 package Lab03a;
 
+import java.util.EmptyStackException;
+
 public class Main {
     public static void main(String args[]) {
         LinkedStack<Integer> linkedStackInt = new LinkedStack<>();
@@ -25,5 +27,11 @@ public class Main {
         linkedStackString.pop();
         linkedStackString.pop();
         System.out.println(linkedStackString.getSize());
+
+        try {
+            System.out.println(linkedStackString.peek());
+        } catch (EmptyStackException e) {
+            System.err.println("Error caught: " + e);
+        }
     }
 }
