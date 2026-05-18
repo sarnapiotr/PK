@@ -7,8 +7,8 @@ import java.util.List;
 public class LinkedStack<T> {
     private List<T> stack = new LinkedList<>();
 
-    public void push(T t) {
-        stack.addFirst(t);
+    public void push(T element) {
+        stack.addFirst(element);
     }
 
     public T pop() {
