@@ -11,6 +11,6 @@ public class Reader implements Callable<String> {
 
     @Override
     public String call() throws Exception {
-        return fileManager.readRPN();
+        return fileManager.readFromFile();
     }
 }
