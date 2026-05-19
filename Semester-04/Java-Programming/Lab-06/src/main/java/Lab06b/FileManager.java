@@ -1,29 +1,22 @@
 package Lab06b;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class FileManager {
-    private final File file = new File("RPNequations.txt");
+    private final File file = new File("RPNEquations.txt");
     private final Lock lock = new ReentrantLock();
-    private final Condition readyToComputeWrite = lock.newCondition();
+    private final Condition readyToWrite = lock.newCondition();
     private final Condition readyToRead = lock.newCondition();
+    private BufferedReader reader;
 
-    public void readRPN() {
-        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
-            String line = "";
+    public FileManager() throws FileNotFoundException {
+        reader = new BufferedReader(new FileReader(file));
+    }
 
-            while ((line = reader.readLine()) != null) {
-                System.out.println(line);
-            }
-
-        } catch (IOException e) {
-            System.err.println(e.getMessage());
-        }
+    public String readRPN() throws IOException {
+        return reader.readLine();
     }
 }
