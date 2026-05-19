@@ -1,27 +1,29 @@
 package Lab06b;
 
 import java.io.IOException;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class Main {
     public static void main(String[] args) {
         try {
             FileManager fileManager = new FileManager();
-            RPN rpn = new RPN();
+            ExecutorService pool = Executors.newFixedThreadPool(1);
 
-            String line = "";
-            while ((line = fileManager.readRPN()) != null) {
+            while (true) {
+                FutureReader futureReader = new FutureReader(new Reader(fileManager));
+                pool.execute(futureReader);
+
+                String line = futureReader.get();
+                if (line == null)
+                    break;
+
                 System.out.println(line);
-
-                Lab06b.RPN.checkEmptyEquation(line);
-                Lab06b.RPN.checkValidEquation(line);
-                Lab06b.RPN.checkValidParentheses(line);
-
-                String rpnEquation = rpn.convertToRpn(line);
-                String result = rpn.calculateRpn(rpnEquation);
-                System.out.println(result);
             }
 
-        } catch (IOException | RuntimeException e) {
+            pool.shutdown();
+        } catch (IOException | ExecutionException | InterruptedException e) {
             System.err.println("Error caught: " + e.getMessage());
         }
     }
