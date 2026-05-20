@@ -1,3 +1,4 @@
 Client 1 | Score: 4/5
 Client 2 | Score: 0/5
 Client 3 | Score: 4/5
+Client 1 | Score: 5/5

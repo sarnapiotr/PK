@@ -9,7 +9,7 @@ import java.util.Scanner;
 
 public class QuizClient {
     private static final String SERVER_ADDRESS = "127.0.0.1";
-    private static final int SERVER_PORT = 12345;
+    private static final int SERVER_PORT = 8080;
 
     public static void main(String[] args) {
         System.out.println("Connecting to the server");
