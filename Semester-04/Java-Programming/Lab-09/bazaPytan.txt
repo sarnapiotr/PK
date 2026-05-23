@@ -1,0 +1,30 @@
+Ktory z ponizszych typow danych NIE jest typem prostym w Javie?
+int
+String
+double
+boolean
+B
+Jakie slowo kluczowe w Javie sluzy do dziedziczenia klas?
+implements
+extends
+inherits
+super
+B
+Co oznacza skrot JVM?
+Java Virtual Machine
+Java Visual Model
+Just Virtual Memory
+Java Variable Manager
+A
+Kto jest tworcem jezyka Java?
+Bill Gates
+Linus Torvalds
+James Gosling
+Dennis Ritchie
+C
+Ktora metoda jest punktem wejscia (startowym) w programie Java?
+start()
+init()
+run()
+main()
+D
