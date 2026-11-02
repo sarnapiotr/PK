@@ -1,3 +1,5 @@
+#include "SM2026-Lab1.h"
+
 #include <SDL2/SDL.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -5,6 +7,10 @@
 
 #include <exception>
 #include <iostream>
+
+#include "SM2026-YCbCr.h"
+#include "SM2026-YIQ.h"
+#include "SM2026-YUV.h"
 using namespace std;
 
 SDL_Window* window = NULL;
@@ -14,36 +20,6 @@ SDL_Surface* screen = NULL;
 #define wysokosc 400
 
 #define tytul "SM2026 - Lab1 - Sarna Piotr"
-
-struct YUV {
-  float m_y;
-  float m_u;
-  float m_v;
-
-  YUV(float y = 0.0f, float u = 0.0f, float v = 0.0f)
-      : m_y(y), m_u(u), m_v(v) {}
-};
-
-struct YIQ {
-  float m_y;
-  float m_i;
-  float m_q;
-
-  YIQ(float y = 0.0f, float i = 0.0f, float q = 0.0f)
-      : m_y(y), m_i(i), m_q(q) {}
-};
-
-struct YCbCr {
-  float m_y;
-  float m_cb;
-  float m_cr;
-
-  YCbCr(float y = 0.0f, float cb = 0.0f, float cr = 0.0f)
-      : m_y(y), m_cb(cb), m_cr(cr) {}
-};
-
-void setPixel(int x, int y, Uint8 R, Uint8 G, Uint8 B);
-SDL_Color getPixel(int x, int y);
 
 void linia(int x1, int y1, int x2, int y2, Uint8 R, Uint8 G, Uint8 B);
 
@@ -58,16 +34,6 @@ void Funkcja6();
 void Funkcja7();
 void Funkcja8();
 void Funkcja9();
-
-void setYUV(int xx, int yy, float y, float u, float v);
-void setYIQ(int xx, int yy, float y, float i, float q);
-void setYCbCr(int xx, int yy, float y, float cb, float cr);
-
-YUV getYUV(int xx, int yy);
-YIQ getYIQ(int xx, int yy);
-YCbCr getYCbCr(int xx, int yy);
-
-Uint8 normalizeUint8(float val);
 
 // RGB -> YUV -> RGB
 void Funkcja1() {
@@ -376,84 +342,6 @@ void ladujBMP(char const* nazwa, int x, int y) {
 void czyscEkran(Uint8 R, Uint8 G, Uint8 B) {
   SDL_FillRect(screen, 0, SDL_MapRGB(screen->format, R, G, B));
   SDL_UpdateWindowSurface(window);
-}
-
-void setYUV(int xx, int yy, float y, float u, float v) {
-  float r = y + 1.13983f * v;
-  float g = y - 0.39465f * u - 0.58060f * v;
-  float b = y + 2.03211f * u;
-
-  Uint8 rNorm = normalizeUint8(r);
-  Uint8 gNorm = normalizeUint8(g);
-  Uint8 bNorm = normalizeUint8(b);
-
-  setPixel(xx, yy, rNorm, gNorm, bNorm);
-}
-
-void setYIQ(int xx, int yy, float y, float i, float q) {
-  float r = y + 0.956f * i + 0.619f * q;
-  float g = y - 0.272f * i - 0.647f * q;
-  float b = y - 1.106f * i + 1.703f * q;
-
-  Uint8 rNorm = normalizeUint8(r);
-  Uint8 gNorm = normalizeUint8(g);
-  Uint8 bNorm = normalizeUint8(b);
-
-  setPixel(xx, yy, rNorm, gNorm, bNorm);
-}
-
-void setYCbCr(int xx, int yy, float y, float cb, float cr) {
-  float r = y + 1.402f * (cr - 128.0f);
-  float g = y - 0.344136f * (cb - 128.0f) - 0.714136f * (cr - 128.0f);
-  float b = y + 1.772f * (cb - 128.0f);
-
-  Uint8 rNorm = normalizeUint8(r);
-  Uint8 gNorm = normalizeUint8(g);
-  Uint8 bNorm = normalizeUint8(b);
-
-  setPixel(xx, yy, rNorm, gNorm, bNorm);
-}
-
-YUV getYUV(int xx, int yy) {
-  SDL_Color color = getPixel(xx, yy);
-
-  Uint8 r = color.r;
-  Uint8 g = color.g;
-  Uint8 b = color.b;
-
-  float y = 0.299f * r + 0.587f * g + 0.114f * b;
-  float u = -0.14713f * r - 0.28886f * g + 0.436f * b;
-  float v = 0.615f * r - 0.51499f * g - 0.10001f * b;
-
-  return YUV(y, u, v);
-}
-
-YIQ getYIQ(int xx, int yy) {
-  SDL_Color color = getPixel(xx, yy);
-
-  Uint8 r = color.r;
-  Uint8 g = color.g;
-  Uint8 b = color.b;
-
-  float y = 0.299f * r + 0.587f * g + 0.114f * b;
-  float i = 0.5959f * r - 0.2746f * g - 0.3213f * b;
-  float q = 0.2115f * r - 0.5227f * g + 0.3112f * b;
-
-  return YIQ(y, i, q);
-}
-
-YCbCr getYCbCr(int xx, int yy) {
-  SDL_Color color = getPixel(xx, yy);
-
-  Uint8 r = color.r;
-  Uint8 g = color.g;
-  Uint8 b = color.b;
-
-  float y = 0.299f * r + 0.587f * g + 0.114f * b;
-  float cb = 128.0f - 0.168736f * r - 0.331264f * g + 0.5f * b;
-  float cr = 128.0f + 0.5f * r - 0.418688f * g - 0.081312f * b;
-
-  return YCbCr(y, cb, cr);
 }
 
 Uint8 normalizeUint8(float val) {
