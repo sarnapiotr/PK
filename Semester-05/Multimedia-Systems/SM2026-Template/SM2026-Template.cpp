@@ -1,3 +1,5 @@
+#include "SM2026-Template.h"
+
 #include <SDL2/SDL.h>
 #include <stdio.h>
 #include <stdlib.h>

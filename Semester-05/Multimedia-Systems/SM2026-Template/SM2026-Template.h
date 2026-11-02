@@ -1,0 +1,4 @@
+#ifndef SM2026_TEMPLATE_H_
+#define SM2026_TEMPLATE_H_
+
+#endif  // SM2026_TEMPLATE_H_
